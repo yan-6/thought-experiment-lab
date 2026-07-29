@@ -4,10 +4,9 @@ export interface ExperimentConfig {
   change: string;
   duration: string;
   scope: "个人" | "城市" | "国家" | "全球";
-  region: string;
   adaptation_speed: "慢" | "中等" | "快";
-  replacement_level: "不允许" | "有限允许" | "完全允许";
-  intervention_level: "无" | "有限" | "强";
+  replacement_level: string;
+  intervention_level: string;
   affected_domains: string[];
   assumptions: string[];
 }
@@ -63,29 +62,16 @@ export interface ExperimentResult {
 export interface ParseResponse {
   success: boolean;
   data?: ExperimentConfig;
-  error?: {
-    code: string;
-    message: string;
-  };
+  error?: { code: string; message: string };
 }
 
 export interface RunResponse {
   success: boolean;
   data?: ExperimentResult;
-  meta?: {
-    experiment_id: string;
-    duration_ms: number;
-    provider: string;
-  };
-  error?: {
-    code: string;
-    message: string;
-  };
+  meta?: { experiment_id: string; duration_ms: number; provider: string };
+  error?: { code: string; message: string };
 }
 
 export type AppState = "HOME" | "PARSING" | "CONFIG" | "RUNNING" | "RESULT" | "ERROR";
 
-export interface LogLine {
-  id: number;
-  text: string;
-}
+export interface LogLine { id: number; text: string }

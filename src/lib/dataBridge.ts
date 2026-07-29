@@ -15,7 +15,6 @@ export async function fetchDataContext(
   config: ExperimentConfig
 ): Promise<DataSnapshot[]> {
   const domains = config.affected_domains.map((d) => d.toLowerCase());
-  const region = config.region || "中国";
   const snapshots: DataSnapshot[] = [];
 
   // Match domains to available datasets
@@ -42,7 +41,7 @@ export async function fetchDataContext(
 
   // If no specific match, provide at least one general snapshot
   if (snapshots.length === 0) {
-    snapshots.push(generateGeneralSnapshot(config, region));
+    snapshots.push(generateGeneralSnapshot(config));
   }
 
   return snapshots;
@@ -116,12 +115,13 @@ async function getEmployeeSnapshot(): Promise<DataSnapshot | null> {
   }
 }
 
-function generateGeneralSnapshot(config: ExperimentConfig, region: string): DataSnapshot {
+function generateGeneralSnapshot(config: ExperimentConfig): DataSnapshot {
+  const scopeLabel = config.scope || "相关区域";
   return {
     source: "通用经济背景",
-    description: `基于实验配置的基本场景描述（${region} · ${config.scope}级别）`,
+    description: `基于实验配置的基本场景描述（${scopeLabel}级别）`,
     facts: [
-      `影响范围: ${config.scope}, 地区: ${region}`,
+      `影响范围: ${config.scope}`,
       `涉及领域: ${config.affected_domains.join("、")}`,
       `时间跨度: ${config.duration}`,
       `适应速度: ${config.adaptation_speed}, 替代程度: ${config.replacement_level}`,
@@ -135,7 +135,7 @@ export function formatDataContext(
   config: ExperimentConfig
 ): string {
   if (snapshots.length === 0) {
-    return `实验范围: ${config.scope}级别，影响${config.region || "相关区域"}，涉及${config.affected_domains.join("、")}。`;
+    return `实验范围: ${config.scope}级别，涉及${config.affected_domains.join("、")}。`;
   }
 
   return snapshots

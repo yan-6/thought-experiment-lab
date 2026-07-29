@@ -1,10 +1,10 @@
 "use client";
 
-import { CheckCircle2, Hash, Clock, MapPin } from "lucide-react";
+import { CheckCircle2, Hash, Clock } from "lucide-react";
 
-interface Props { experimentId: string; title: string; subject: string; duration: string; region: string; durationMs: number; }
+interface Props { experimentId: string; title: string; subject: string; duration: string; durationMs: number; }
 
-export default function ExperimentHeader({ experimentId, title, subject, duration, region, durationMs }: Props) {
+export default function ExperimentHeader({ experimentId, title, subject, duration, durationMs }: Props) {
   return (
     <div className="w-full border-b border-lab-border pb-6 animate-slide-up">
       <div className="flex items-center gap-3 mb-4">
@@ -12,10 +12,9 @@ export default function ExperimentHeader({ experimentId, title, subject, duratio
         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-lab-accent/5 border border-lab-accent/10"><CheckCircle2 className="w-3.5 h-3.5 text-lab-accent"/><span className="text-xs font-mono text-lab-accent tracking-wider uppercase">✅ 实验成功</span></div>
       </div>
       <h1 className="text-2xl sm:text-3xl font-light text-lab-text-bright mb-4">{title}</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         <Badge icon={<Hash className="w-3 h-3"/>} label="实验对象" value={subject}/>
         <Badge icon={<Clock className="w-3 h-3"/>} label="时间跨度" value={duration}/>
-        <Badge icon={<MapPin className="w-3 h-3"/>} label="影响地区" value={region}/>
         <Badge icon={<Clock className="w-3 h-3"/>} label="模拟耗时" value={`${(durationMs/1000).toFixed(1)}s`}/>
       </div>
     </div>

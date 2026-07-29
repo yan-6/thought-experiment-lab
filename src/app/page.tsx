@@ -71,9 +71,9 @@ export default function Home() {
         return (<div className="py-12"><TerminalLoader experimentTitle={config?.title||"Experiment"} isComplete={apiComplete}/></div>);
       case "RESULT":
         return result ? (<div className="py-6 px-4 max-w-4xl mx-auto space-y-8">
-          <ExperimentHeader experimentId={experimentId} title={result.experiment.title} subject={result.experiment.subject} duration={result.experiment.duration} region={result.experiment.region} durationMs={durationMs}/>
+          <ExperimentHeader experimentId={experimentId} title={result.experiment.title} subject={result.experiment.subject} duration={result.experiment.duration} durationMs={durationMs}/>
           <FinalInsightCard insight={result.final_insight}/>
-          <section className="animate-slide-up space-y-3" style={{animationDelay:"0.15s"}}><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">📋 实验定义（你假设了什么）</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm"><Def l="对象" v={result.experiment.subject}/><Def l="变化" v={result.experiment.change}/><Def l="时长" v={result.experiment.duration}/><Def l="范围" v={result.experiment.scope}/><Def l="地区" v={result.experiment.region}/><Def l="适应速度" v={result.experiment.adaptation_speed}/></div></section>
+          <section className="animate-slide-up space-y-3" style={{animationDelay:"0.15s"}}><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">📋 实验定义（你假设了什么）</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm"><Def l="对象" v={result.experiment.subject}/><Def l="变化" v={result.experiment.change}/><Def l="时长" v={result.experiment.duration}/><Def l="范围" v={result.experiment.scope}/><Def l="适应速度" v={result.experiment.adaptation_speed}/></div></section>
           <DependencyMap graph={result.dependency_graph}/>
           <Timeline items={result.timeline}/>
           <UnexpectedOutcomes outcomes={result.unexpected_effects}/>

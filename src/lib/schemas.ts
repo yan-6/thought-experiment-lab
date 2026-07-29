@@ -6,10 +6,9 @@ export const ExperimentConfigSchema = z.object({
   change: z.string().min(1),
   duration: z.string().min(1),
   scope: z.enum(["个人", "城市", "国家", "全球"]),
-  region: z.string().min(1),
   adaptation_speed: z.enum(["慢", "中等", "快"]),
-  replacement_level: z.enum(["不允许", "有限允许", "完全允许"]),
-  intervention_level: z.enum(["无", "有限", "强"]),
+  replacement_level: z.string(),
+  intervention_level: z.string(),
   affected_domains: z.array(z.string()),
   assumptions: z.array(z.string()),
 });
@@ -62,9 +61,7 @@ export const ExperimentResultSchema = z.object({
   disclaimer: z.string(),
 });
 
-export const ParseRequestSchema = z.object({
-  hypothesis: z.string().min(5).max(300),
-});
+export const ParseRequestSchema = z.object({ hypothesis: z.string().min(5).max(300) });
 
 export const RunRequestSchema = z.object({
   hypothesis: z.string().min(5).max(300),
