@@ -10,16 +10,16 @@ const config: Config = {
     extend: {
       colors: {
         lab: {
-          bg: "#0a0a0f",
-          surface: "#12121a",
-          border: "#1e1e2e",
-          accent: "#00e5a0",
-          "accent-dim": "#00b882",
-          warn: "#f0c040",
-          error: "#ff4466",
-          text: "#c8ccd4",
-          "text-dim": "#6a6d78",
-          "text-bright": "#e8ecf0",
+          bg: "#0c0c16",
+          surface: "#18182a",
+          border: "#2a2a44",
+          accent: "#00ffb3",
+          "accent-dim": "#00cc8f",
+          warn: "#ffcc33",
+          error: "#ff5577",
+          text: "#e0e4ee",
+          "text-dim": "#9ea3b4",
+          "text-bright": "#f4f6fa",
         },
       },
       fontFamily: {
@@ -35,25 +35,13 @@ const config: Config = {
       },
       keyframes: {
         pulseGlow: {
-          "0%, 100%": { boxShadow: "0 0 8px rgba(0,229,160,0.15)" },
-          "50%": { boxShadow: "0 0 20px rgba(0,229,160,0.35)" },
+          "0%, 100%": { boxShadow: "0 0 8px rgba(0,255,179,0.15)" },
+          "50%": { boxShadow: "0 0 20px rgba(0,255,179,0.35)" },
         },
-        scanLine: {
-          "0%": { transform: "translateY(-100%)" },
-          "100%": { transform: "translateY(100%)" },
-        },
-        fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
-        },
-        slideUp: {
-          "0%": { opacity: "0", transform: "translateY(20px)" },
-          "100%": { opacity: "1", transform: "translateY(0)" },
-        },
-        blink: {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0" },
-        },
+        scanLine: { "0%": { transform: "translateY(-100%)" }, "100%": { transform: "translateY(100%)" } },
+        fadeIn: { "0%": { opacity: "0" }, "100%": { opacity: "1" } },
+        slideUp: { "0%": { opacity: "0", transform: "translateY(20px)" }, "100%": { opacity: "1", transform: "translateY(0)" } },
+        blink: { "0%, 100%": { opacity: "1" }, "50%": { opacity: "0" } },
       },
     },
   },
