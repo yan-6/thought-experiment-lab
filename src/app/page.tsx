@@ -73,11 +73,11 @@ export default function Home() {
         return result ? (<div className="py-6 px-4 max-w-4xl mx-auto space-y-8">
           <ExperimentHeader experimentId={experimentId} title={result.experiment.title} subject={result.experiment.subject} duration={result.experiment.duration} durationMs={durationMs}/>
           <FinalInsightCard insight={result.final_insight}/>
-          <section className="animate-slide-up space-y-3" style={{animationDelay:"0.15s"}}><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">📋 实验定义（你假设了什么）</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm"><Def l="对象" v={result.experiment.subject}/><Def l="变化" v={result.experiment.change}/><Def l="时长" v={result.experiment.duration}/><Def l="范围" v={result.experiment.scope}/><Def l="适应速度" v={result.experiment.adaptation_speed}/></div></section>
+          <section className="animate-slide-up space-y-3" style={{animationDelay:"0.15s"}}><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">📝 你假设了什么</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm"><Def l="对象" v={result.experiment.subject}/><Def l="变化" v={result.experiment.change}/><Def l="时长" v={result.experiment.duration}/><Def l="范围" v={result.experiment.scope}/><Def l="适应速度" v={result.experiment.adaptation_speed}/></div></section>
           <DependencyMap graph={result.dependency_graph}/>
           <Timeline items={result.timeline}/>
           <UnexpectedOutcomes outcomes={result.unexpected_effects}/>
-          <section className="animate-slide-up space-y-4" style={{animationDelay:"0.4s"}}><div className="flex items-center gap-2"><span className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">🌍 平行世界（三种可能的未来）</span></div><div className="grid grid-cols-1 md:grid-cols-3 gap-4">{result.worldlines.map((wl,i)=><WorldlineCard key={i} worldline={wl} index={i}/>)}</div></section>
+          <section className="animate-slide-up space-y-4" style={{animationDelay:"0.4s"}}><div className="flex items-center gap-2"><span className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">🌍 三种可能的未来</span></div><div className="grid grid-cols-1 md:grid-cols-3 gap-4">{result.worldlines.map((wl,i)=><WorldlineCard key={i} worldline={wl} index={i}/>)}</div></section>
           <WinnersLosers winners={result.biggest_winners} losers={result.biggest_losers} firstBreakingPoint={result.first_breaking_point} hardestToReplace={result.hardest_to_replace} newThingCreated={result.new_thing_created}/>
           <ConstraintConflicts conflicts={result.constraint_conflicts}/>
           <p className="text-center text-[10px] text-lab-text-dim/40 font-mono tracking-wider pt-4">{result.disclaimer}</p>

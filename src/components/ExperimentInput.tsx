@@ -27,7 +27,7 @@ export default function ExperimentInput({ hypothesis, setHypothesis, onSubmit, i
         如果世界按下 <span className="text-lab-accent font-normal">Ctrl+Z</span> 会怎样？
       </h1>
       <p className="text-center text-lab-text-dim text-sm animate-slide-up" style={{ animationDelay: "0.1s" }}>
-        输入一个疯狂的假设，我们帮你把它变成一份看起来很科学的报告 🧪
+        输入一个离谱的脑洞，剩下的交给 AI 来圆 🌀
       </p>
       <div className="relative group animate-slide-up" style={{ animationDelay: "0.2s" }}>
         <textarea
@@ -35,7 +35,7 @@ export default function ExperimentInput({ hypothesis, setHypothesis, onSubmit, i
           value={hypothesis}
           onChange={(e) => { if (e.target.value.length <= 300) setHypothesis(e.target.value); }}
           onKeyDown={handleKeyDown}
-          placeholder="例如：如果微信突然消失…… 如果老板再也不能@我…… 如果猫统治了世界……"
+          placeholder="比如：微信突然没了… 老板再也不能@我… 猫统治了地球…"
           rows={3} maxLength={300} disabled={isLoading}
           className="w-full bg-lab-surface border border-lab-border rounded-lg px-5 py-4
                      text-lab-text-bright placeholder:text-lab-text-dim/50 text-base
@@ -63,14 +63,14 @@ export default function ExperimentInput({ hypothesis, setHypothesis, onSubmit, i
                      disabled:opacity-30 disabled:cursor-not-allowed"
         >
           {isLoading ? (
-            <><Sparkles className="w-4 h-4 animate-pulse" /><span className="font-mono tracking-[0.2em] uppercase">AI 正在理解你的脑洞……</span></>
+            <><Sparkles className="w-4 h-4 animate-pulse" /><span className="font-mono tracking-[0.2em] uppercase">正在理解你的脑洞…</span></>
           ) : (
-            <><span className="font-mono tracking-[0.15em] uppercase">🚀 开始脑洞实验</span><ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" /></>
+            <><span className="font-mono tracking-[0.1em]">🚀 来，搞个大的</span><ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" /></>
           )}
         </button>
       </div>
       <p className="text-center text-[10px] text-lab-text-dim/40 font-mono animate-fade-in" style={{ animationDelay: "0.35s" }}>
-        别担心，不会把你的假设上传到外星服务器（大概吧）
+        不会上传到外星服务器（大概吧）
       </p>
     </form>
   );

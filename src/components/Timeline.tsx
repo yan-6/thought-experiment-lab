@@ -6,13 +6,13 @@ import type { TimelineItem } from "@/types/experiment";
 interface Props { items: TimelineItem[]; }
 
 const CC: Record<string, string> = { critical: "border-lab-error text-lab-error bg-lab-error/5", high: "border-lab-warn text-lab-warn bg-lab-warn/5", medium: "border-lab-accent/50 text-lab-accent bg-lab-accent/5", low: "border-lab-text-dim/30 text-lab-text-dim bg-lab-surface" };
-const CL: Record<string, string> = { critical: "CRITICAL", high: "HIGH", medium: "MEDIUM", low: "LOW" };
+const CL: Record<string, string> = { critical: "💀 大崩", high: "🔥 严重", medium: "⚡ 中等", low: "🫧 轻微" };
 
 export default function Timeline({ items }: Props) {
   if (!items || items.length === 0) return null;
   return (
     <div className="animate-slide-up" style={{ animationDelay: "0.3s" }}>
-      <div className="flex items-center gap-2 mb-4"><Clock className="w-4 h-4 text-lab-accent"/><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">⏱️ 连锁反应时间线（多米诺骨牌第一视角）</h3></div>
+      <div className="flex items-center gap-2 mb-4"><Clock className="w-4 h-4 text-lab-accent"/><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">⏱️ 事情会怎么一步步崩</h3></div>
       <div className="relative pl-8">
         <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-lab-border"/>
         <div className="space-y-6">

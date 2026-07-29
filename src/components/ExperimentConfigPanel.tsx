@@ -8,18 +8,18 @@ interface Props { config: ExperimentConfig; hypothesis: string; onRun: (c: Exper
 
 const DUR = ["一周","一个月","一年","五年","十年"];
 const DUR_HINT: Record<string, string> = {
-  "一周": "冲击刚发生，系统还在慌乱",
-  "一个月": "短期混乱，替代方案开始出现",
-  "一年": "新秩序初步建立，旧伤还在愈合",
-  "五年": "结构性变化已经固化",
-  "十年": "一代人都快忘了原来长啥样",
+  "一周": "刚刚开始，大家还在一脸懵逼 😳",
+  "一个月": "已经开始慌了，到处找替代方案 🏃",
+  "一年": "新秩序差不多稳了，旧伤口还在痒 🩹",
+  "五年": "已经没人记得原来长啥样了 🤷",
+  "十年": "小朋友：你说的那个东西是啥？👶",
 };
 const SCP = ["个人","城市","国家","全球"] as const;
 const SCP_HINT: Record<string, string> = {
-  "个人": "只影响一个人的生活",
-  "城市": "影响一座城市的运转",
-  "国家": "影响整个国家的各个层面",
-  "全球": "波及全世界，谁也跑不掉",
+  "个人": "就祸害一个人（比如你）",
+  "城市": "一座城市陪你一起崩",
+  "国家": "全国上下一起体验过山车",
+  "全球": "谁都别想跑 🌍",
 };
 const SPD = ["慢","中等","快"] as const;
 
@@ -43,38 +43,38 @@ export default function ExperimentConfigPanel({ config: initial, hypothesis, onR
     <div className="w-full max-w-3xl mx-auto space-y-6 animate-fade-in px-4">
       {/* Header */}
       <div className="flex items-center justify-between pb-4 border-b border-lab-border">
-        <div><p className="text-xs font-mono text-lab-text-dim tracking-wider uppercase mb-1">Experiment Configuration</p><h2 className="text-xl font-semibold text-lab-text-bright">{cfg.title}</h2></div>
+        <div><p className="text-xs font-mono text-lab-text-dim tracking-wider uppercase">🔧 微调一下你的脑洞</p><h2 className="text-xl font-semibold text-lab-text-bright">{cfg.title}</h2></div>
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="flex items-center gap-1.5 px-4 py-2 text-sm text-lab-text-dim hover:text-lab-text border border-lab-border rounded-lg"><ArrowLeft className="w-4 h-4"/><span className="font-mono text-xs tracking-wider">Back</span></button>
-          <button onClick={()=>onRun(cfg)} className="flex items-center gap-2 px-6 py-2.5 bg-lab-accent text-lab-bg font-semibold text-sm rounded-lg hover:bg-lab-accent-dim hover:shadow-[0_0_25px_rgba(0,229,160,0.3)] transition-all duration-300"><Play className="w-4 h-4"/><span className="font-mono tracking-wider text-xs uppercase">Run This World</span></button>
+          <button onClick={onBack} className="flex items-center gap-1.5 px-4 py-2 text-sm text-lab-text-dim hover:text-lab-text border border-lab-border rounded-lg"><ArrowLeft className="w-4 h-4"/><span className="font-mono text-xs tracking-wider">算了</span></button>
+          <button onClick={()=>onRun(cfg)} className="flex items-center gap-2 px-6 py-2.5 bg-lab-accent text-lab-bg font-semibold text-sm rounded-lg hover:bg-lab-accent-dim hover:shadow-[0_0_25px_rgba(0,229,160,0.3)] transition-all duration-300"><Play className="w-4 h-4"/><span className="font-mono tracking-wider text-xs uppercase">🚀 搞起</span></button>
         </div>
       </div>
 
       {/* Hypothesis display */}
       <div className="bg-lab-surface/50 border border-lab-border/50 rounded-lg p-4">
-        <div className="flex items-center gap-1.5 mb-1"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">Hypothesis · 你的原始假设</p></div>
+        <div className="flex items-center gap-1.5 mb-1"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">你说的</p></div>
         <p className="text-sm text-lab-text leading-relaxed">{hypothesis}</p>
       </div>
 
       {/* ───── 核心配置 ───── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Fld l="实验对象" hint="这个实验的主角是谁？" i={<Settings2 className="w-3.5 h-3.5"/>}>
+        <Fld l="主角是谁" hint="谁被盯上了？" i={<Settings2 className="w-3.5 h-3.5"/>}>
           <input type="text" value={cfg.subject} onChange={e=>upd("subject",e.target.value)} className="config-input"/>
         </Fld>
-        <Fld l="发生了什么变化" hint="一句话说清楚：什么变了？" i={<Zap className="w-3.5 h-3.5"/>}>
+        <Fld l="到底发生了啥" hint="一句话，简单粗暴" i={<Zap className="w-3.5 h-3.5"/>}>
           <input type="text" value={cfg.change} onChange={e=>upd("change",e.target.value)} className="config-input"/>
         </Fld>
-        <Fld l="时间跨度" hint={DUR_HINT[cfg.duration] || "选择实验的时间范围"} i={<Clock className="w-3.5 h-3.5"/>}>
+        <Fld l="搞多久" hint={DUR_HINT[cfg.duration] || ""} i={<Clock className="w-3.5 h-3.5"/>}>
           <select value={cfg.duration} onChange={e=>upd("duration",e.target.value)} className="config-input">
             {DUR.map(o=><option key={o} value={o}>{o}</option>)}
           </select>
         </Fld>
-        <Fld l="影响范围" hint={SCP_HINT[cfg.scope] || "这个变化影响多大？"} i={<Globe className="w-3.5 h-3.5"/>}>
+        <Fld l="影响多大" hint={SCP_HINT[cfg.scope] || ""} i={<Globe className="w-3.5 h-3.5"/>}>
           <select value={cfg.scope} onChange={e=>upd("scope",e.target.value as typeof cfg.scope)} className="config-input">
             {SCP.map(o=><option key={o} value={o}>{o}</option>)}
           </select>
         </Fld>
-        <Fld l="适应速度" hint="人们/系统多快能适应这个变化？" i={<Clock className="w-3.5 h-3.5"/>}>
+        <Fld l="大家多快接受现实" hint="慢：死扛到底 → 快：秒怂" i={<Clock className="w-3.5 h-3.5"/>}>
           <select value={cfg.adaptation_speed} onChange={e=>upd("adaptation_speed",e.target.value as typeof cfg.adaptation_speed)} className="config-input">
             {SPD.map(o=><option key={o} value={o}>{o}</option>)}
           </select>
@@ -83,36 +83,36 @@ export default function ExperimentConfigPanel({ config: initial, hypothesis, onR
 
       {/* ───── 可自定义的开放字段 ───── */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Fld l="替代方案程度" hint="可以出现替代品吗？随便写" i={<Settings2 className="w-3.5 h-3.5"/>}>
-          <input type="text" value={cfg.replacement_level} onChange={e=>upd("replacement_level",e.target.value)} placeholder="例如：允许、禁止、部分允许……" className="config-input"/>
+        <Fld l="能有替代品吗" hint="Plan B 能不能用？" i={<Settings2 className="w-3.5 h-3.5"/>}>
+          <input type="text" value={cfg.replacement_level} onChange={e=>upd("replacement_level",e.target.value)} placeholder="随便写，比如：做梦" className="config-input"/>
         </Fld>
-        <Fld l="外部干预程度" hint="政府/外力会介入吗？随便写" i={<Zap className="w-3.5 h-3.5"/>}>
-          <input type="text" value={cfg.intervention_level} onChange={e=>upd("intervention_level",e.target.value)} placeholder="例如：无、轻度、强力干预……" className="config-input"/>
+        <Fld l="有人管这事吗" hint="政府/大佬/救世主会插手吗？" i={<Zap className="w-3.5 h-3.5"/>}>
+          <input type="text" value={cfg.intervention_level} onChange={e=>upd("intervention_level",e.target.value)} placeholder="随便写，比如：没人管" className="config-input"/>
         </Fld>
       </div>
 
-      {/* ───── Affected Domains (新增按钮) ───── */}
+      {/* ───── Affected Domains ───── */}
       <div className="space-y-2">
-        <div className="flex items-center gap-1.5"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">影响领域 · 哪些方面会被波及？</p></div>
+        <div className="flex items-center gap-1.5"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">哪些地方会遭殃 💥</p></div>
         <div className="flex flex-wrap gap-2 mb-2">
           {cfg.affected_domains.map((d,i)=><span key={i} className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-lab-accent/10 border border-lab-accent/20 text-lab-accent font-mono">{d}<button onClick={()=>rmDomain(i)} className="hover:text-lab-error transition-colors"><X className="w-2.5 h-2.5"/></button></span>)}
         </div>
         <div className="flex gap-2">
-          <input type="text" value={newDomain} onChange={e=>setNewDomain(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();addDomain();}}} placeholder="添加领域，如：交通、教育……" className="config-input text-sm flex-1"/>
-          <button onClick={addDomain} className="px-3 py-2 text-xs font-mono bg-lab-accent/10 border border-lab-accent/20 text-lab-accent rounded-lg hover:bg-lab-accent/20 transition-colors">+ 添加</button>
+          <input type="text" value={newDomain} onChange={e=>setNewDomain(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();addDomain();}}} placeholder="再加一个，比如：外卖、追星……" className="config-input text-sm flex-1"/>
+          <button onClick={addDomain} className="px-3 py-2 text-xs font-mono bg-lab-accent/10 border border-lab-accent/20 text-lab-accent rounded-lg hover:bg-lab-accent/20 transition-colors">+</button>
         </div>
       </div>
 
-      {/* ───── Assumptions (新增按钮) ───── */}
+      {/* ───── Assumptions ───── */}
       <div className="space-y-3">
-        <div className="flex items-center gap-1.5"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">默认前提 · 实验的基础条件假设</p></div>
+        <div className="flex items-center gap-1.5"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">有啥前提条件 🤔</p></div>
         <div className="flex flex-wrap gap-2 mb-2">
           {cfg.assumptions.map((a,i)=><span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-lab-surface border border-lab-border rounded-full text-lab-text group">{a}<button onClick={()=>rmAssumption(i)} className="text-lab-text-dim hover:text-lab-error transition-colors"><X className="w-3 h-3"/></button></span>)}
-          {cfg.assumptions.length===0&&<span className="text-xs text-lab-text-dim/60 italic">暂无前提，试试添加一个？</span>}
+          {cfg.assumptions.length===0&&<span className="text-xs text-lab-text-dim/60 italic">没前提？那全世界一起崩</span>}
         </div>
         <div className="flex gap-2">
-          <input type="text" value={newAssumption} onChange={e=>setNewAssumption(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();addAssumption();}}} placeholder="添加前提，如：互联网正常运行……" className="config-input text-sm flex-1"/>
-          <button onClick={addAssumption} className="px-3 py-2 text-xs font-mono bg-lab-surface border border-lab-border text-lab-text-dim rounded-lg hover:border-lab-accent/30 hover:text-lab-text transition-colors">+ 添加</button>
+          <input type="text" value={newAssumption} onChange={e=>setNewAssumption(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();addAssumption();}}} placeholder="比如：Wi-Fi 没断、快递还在……" className="config-input text-sm flex-1"/>
+          <button onClick={addAssumption} className="px-3 py-2 text-xs font-mono bg-lab-surface border border-lab-border text-lab-text-dim rounded-lg hover:border-lab-accent/30 hover:text-lab-text transition-colors">+</button>
         </div>
       </div>
     </div>
