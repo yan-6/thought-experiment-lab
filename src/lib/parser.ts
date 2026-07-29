@@ -67,7 +67,7 @@ export function validateHypothesis(hypothesis: string): { valid: boolean; error?
   }
   const trimmed = hypothesis.trim();
   if (trimmed.length < 5) {
-    return { valid: false, error: "请输入一个完整的"如果……会怎样"实验假设。" };
+    return { valid: false, error: "请输入一个完整的「如果……会怎样」实验假设。" };
   }
   if (trimmed.length > 300) {
     return { valid: false, error: "实验假设不能超过 300 个字符。" };
