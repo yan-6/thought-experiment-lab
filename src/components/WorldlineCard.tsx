@@ -15,7 +15,7 @@ const WL = ["结局 A","结局 B","结局 C"];
 export default function WorldlineCard({ worldline, index }: Props) {
   const s = LS[worldline.likelihood] || LS["Plausible"];
   return (
-    <div className={`rounded-xl border ${s.bg} p-5 flex flex-col h-full`}>
+    <div className={`card-lift rounded-xl border ${s.bg} p-5 flex flex-col h-full`}>
       <div className="flex items-center justify-between mb-4"><div className="flex items-center gap-2"><Globe className={`w-4 h-4 ${s.text}`}/><h4 className="text-sm font-bold font-mono text-lab-text-bright">{WL[index]||worldline.name}</h4></div><span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${s.bg} ${s.text}`}>{worldline.likelihood}</span></div>
       <div className="w-full h-1 bg-lab-border rounded-full mb-4 overflow-hidden"><div className={`h-full rounded-full ${s.bar} ${worldline.likelihood==="More Likely"?"w-3/4":worldline.likelihood==="Plausible"?"w-1/2":"w-1/4"}`}/></div>
       <p className="text-sm text-lab-text leading-relaxed mb-4 flex-1">{worldline.summary}</p>

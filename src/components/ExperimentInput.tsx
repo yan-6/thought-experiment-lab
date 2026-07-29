@@ -23,7 +23,7 @@ export default function ExperimentInput({ hypothesis, setHypothesis, onSubmit, i
 
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSubmit(); }} className="w-full max-w-2xl mx-auto space-y-4">
-      <h1 className="text-3xl sm:text-4xl font-light text-center text-lab-text-bright tracking-tight animate-slide-up">
+      <h1 className="text-3xl sm:text-4xl font-light text-center text-lab-text-bright tracking-tight animate-scale-in">
         如果世界按下 <span className="text-lab-accent font-normal">Ctrl+Z</span> 会怎样？
       </h1>
       <p className="text-center text-lab-text-dim text-sm animate-slide-up" style={{ animationDelay: "0.1s" }}>
@@ -39,12 +39,14 @@ export default function ExperimentInput({ hypothesis, setHypothesis, onSubmit, i
           rows={3} maxLength={300} disabled={isLoading}
           className="w-full bg-lab-surface border border-lab-border rounded-lg px-5 py-4
                      text-lab-text-bright placeholder:text-lab-text-dim/50 text-base
-                     focus:outline-none focus:border-lab-accent/50 focus:ring-1 focus:ring-lab-accent/20
                      transition-all duration-300 resize-none font-sans
+                     hover:border-lab-text-dim/40
+                     focus:outline-none focus:border-lab-accent/60
+                     focus:shadow-[0_0_0_3px_rgba(0,255,179,0.08),0_0_20px_rgba(0,255,179,0.05)]
                      disabled:opacity-50 disabled:cursor-not-allowed"
         />
         <div className="absolute bottom-3 right-3">
-          <span className={`text-xs font-mono ${charCount > 250 ? "text-lab-warn" : "text-lab-text-dim"}`}>
+          <span className={`text-xs font-mono transition-colors duration-300 ${charCount > 250 ? "text-lab-warn" : "text-lab-text-dim"}`}>
             {charCount}/300
           </span>
         </div>
@@ -54,13 +56,13 @@ export default function ExperimentInput({ hypothesis, setHypothesis, onSubmit, i
         <button
           type="submit"
           disabled={isLoading || hypothesis.trim().length < 5}
-          className="group relative inline-flex items-center gap-2 px-8 py-3
+          className="btn-glow scale-press ripple-effect group relative inline-flex items-center gap-2 px-8 py-3
                      bg-lab-accent/10 border border-lab-accent/30 rounded-lg
                      text-lab-accent font-medium text-sm tracking-wider
-                     hover:bg-lab-accent/20 hover:border-lab-accent/50
-                     hover:shadow-[0_0_20px_rgba(0,229,160,0.15)]
                      transition-all duration-300
-                     disabled:opacity-30 disabled:cursor-not-allowed"
+                     hover:bg-lab-accent/20 hover:border-lab-accent/50
+                     hover:shadow-[0_0_25px_rgba(0,255,179,0.25)]
+                     disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none"
         >
           {isLoading ? (
             <><Sparkles className="w-4 h-4 animate-pulse" /><span className="font-mono tracking-[0.2em] uppercase">正在理解你的脑洞…</span></>

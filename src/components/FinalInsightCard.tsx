@@ -7,7 +7,7 @@ interface Props { insight: string; }
 export default function FinalInsightCard({ insight }: Props) {
   return (
     <div className="w-full animate-slide-up" style={{ animationDelay: "0.1s" }}>
-      <div className="relative rounded-xl border border-lab-accent/20 bg-lab-accent/5 overflow-hidden p-6 sm:p-8">
+      <div className="card-lift relative rounded-xl border border-lab-accent/20 bg-lab-accent/5 overflow-hidden p-6 sm:p-8 transition-all duration-500 hover:border-lab-accent/40">
         <div className="absolute top-0 left-0 w-12 h-12 border-t-2 border-l-2 border-lab-accent/30 rounded-tl-xl"/>
         <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-lab-accent/30 rounded-br-xl"/>
         <div className="flex items-start gap-4">

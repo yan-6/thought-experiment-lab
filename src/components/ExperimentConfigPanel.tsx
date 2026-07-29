@@ -40,24 +40,28 @@ export default function ExperimentConfigPanel({ config: initial, hypothesis, onR
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto space-y-6 animate-fade-in px-4">
+    <div className="w-full max-w-3xl mx-auto space-y-6 animate-scale-in px-4">
       {/* Header */}
       <div className="flex items-center justify-between pb-4 border-b border-lab-border">
         <div><p className="text-xs font-mono text-lab-text-dim tracking-wider uppercase">🔧 微调一下你的脑洞</p><h2 className="text-xl font-semibold text-lab-text-bright">{cfg.title}</h2></div>
         <div className="flex items-center gap-3">
-          <button onClick={onBack} className="flex items-center gap-1.5 px-4 py-2 text-sm text-lab-text-dim hover:text-lab-text border border-lab-border rounded-lg"><ArrowLeft className="w-4 h-4"/><span className="font-mono text-xs tracking-wider">算了</span></button>
-          <button onClick={()=>onRun(cfg)} className="flex items-center gap-2 px-6 py-2.5 bg-lab-accent text-lab-bg font-semibold text-sm rounded-lg hover:bg-lab-accent-dim hover:shadow-[0_0_25px_rgba(0,229,160,0.3)] transition-all duration-300"><Play className="w-4 h-4"/><span className="font-mono tracking-wider text-xs uppercase">🚀 搞起</span></button>
+          <button onClick={onBack} className="scale-press flex items-center gap-1.5 px-4 py-2 text-sm text-lab-text-dim hover:text-lab-text border border-lab-border rounded-lg hover:border-lab-text-dim/40 transition-all duration-300">
+            <ArrowLeft className="w-4 h-4"/><span className="font-mono text-xs tracking-wider">算了</span>
+          </button>
+          <button onClick={()=>onRun(cfg)} className="btn-glow scale-press ripple-effect flex items-center gap-2 px-6 py-2.5 bg-lab-accent text-lab-bg font-semibold text-sm rounded-lg transition-all duration-300">
+            <Play className="w-4 h-4"/><span className="font-mono tracking-wider text-xs uppercase">🚀 搞起</span>
+          </button>
         </div>
       </div>
 
       {/* Hypothesis display */}
-      <div className="bg-lab-surface/50 border border-lab-border/50 rounded-lg p-4">
+      <div className="card-lift bg-lab-surface/50 border border-lab-border/50 rounded-lg p-4">
         <div className="flex items-center gap-1.5 mb-1"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">你说的</p></div>
         <p className="text-sm text-lab-text leading-relaxed">{hypothesis}</p>
       </div>
 
       {/* ───── 核心配置 ───── */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
         <Fld l="主角是谁" hint="谁被盯上了？" i={<Settings2 className="w-3.5 h-3.5"/>}>
           <input type="text" value={cfg.subject} onChange={e=>upd("subject",e.target.value)} className="config-input"/>
         </Fld>
@@ -95,11 +99,11 @@ export default function ExperimentConfigPanel({ config: initial, hypothesis, onR
       <div className="space-y-2">
         <div className="flex items-center gap-1.5"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">哪些地方会遭殃 💥</p></div>
         <div className="flex flex-wrap gap-2 mb-2">
-          {cfg.affected_domains.map((d,i)=><span key={i} className="inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-lab-accent/10 border border-lab-accent/20 text-lab-accent font-mono">{d}<button onClick={()=>rmDomain(i)} className="hover:text-lab-error transition-colors"><X className="w-2.5 h-2.5"/></button></span>)}
+          {cfg.affected_domains.map((d,i)=><span key={i} className="tag-hover inline-flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-lab-accent/10 border border-lab-accent/20 text-lab-accent font-mono">{d}<button onClick={()=>rmDomain(i)} className="hover:text-lab-error transition-colors"><X className="w-2.5 h-2.5"/></button></span>)}
         </div>
         <div className="flex gap-2">
           <input type="text" value={newDomain} onChange={e=>setNewDomain(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();addDomain();}}} placeholder="再加一个，比如：外卖、追星……" className="config-input text-sm flex-1"/>
-          <button onClick={addDomain} className="px-3 py-2 text-xs font-mono bg-lab-accent/10 border border-lab-accent/20 text-lab-accent rounded-lg hover:bg-lab-accent/20 transition-colors">+</button>
+          <button onClick={addDomain} className="btn-glow scale-press px-3 py-2 text-xs font-mono bg-lab-accent/10 border border-lab-accent/20 text-lab-accent rounded-lg transition-colors">+</button>
         </div>
       </div>
 
@@ -107,12 +111,12 @@ export default function ExperimentConfigPanel({ config: initial, hypothesis, onR
       <div className="space-y-3">
         <div className="flex items-center gap-1.5"><Info className="w-3 h-3 text-lab-text-dim"/><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider">有啥前提条件 🤔</p></div>
         <div className="flex flex-wrap gap-2 mb-2">
-          {cfg.assumptions.map((a,i)=><span key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-lab-surface border border-lab-border rounded-full text-lab-text group">{a}<button onClick={()=>rmAssumption(i)} className="text-lab-text-dim hover:text-lab-error transition-colors"><X className="w-3 h-3"/></button></span>)}
+          {cfg.assumptions.map((a,i)=><span key={i} className="tag-hover inline-flex items-center gap-1.5 px-3 py-1.5 text-xs bg-lab-surface border border-lab-border rounded-full text-lab-text group">{a}<button onClick={()=>rmAssumption(i)} className="text-lab-text-dim hover:text-lab-error transition-colors"><X className="w-3 h-3"/></button></span>)}
           {cfg.assumptions.length===0&&<span className="text-xs text-lab-text-dim/60 italic">没前提？那全世界一起崩</span>}
         </div>
         <div className="flex gap-2">
           <input type="text" value={newAssumption} onChange={e=>setNewAssumption(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"){e.preventDefault();addAssumption();}}} placeholder="比如：Wi-Fi 没断、快递还在……" className="config-input text-sm flex-1"/>
-          <button onClick={addAssumption} className="px-3 py-2 text-xs font-mono bg-lab-surface border border-lab-border text-lab-text-dim rounded-lg hover:border-lab-accent/30 hover:text-lab-text transition-colors">+</button>
+          <button onClick={addAssumption} className="scale-press px-3 py-2 text-xs font-mono bg-lab-surface border border-lab-border text-lab-text-dim rounded-lg hover:border-lab-accent/30 hover:text-lab-text transition-all duration-300">+</button>
         </div>
       </div>
     </div>

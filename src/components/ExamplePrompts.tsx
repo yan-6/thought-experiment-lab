@@ -23,11 +23,10 @@ export default function ExamplePrompts({ onSelect, disabled }: ExamplePromptsPro
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {EXAMPLES.map((ex, i) => (
           <button key={i} onClick={() => onSelect(ex.text)} disabled={disabled}
-            className="text-left group flex items-start gap-2 px-4 py-3 rounded-lg
+            className="card-lift scale-press text-left group flex items-start gap-2 px-4 py-3 rounded-lg
                        bg-lab-surface/50 border border-lab-border/50
-                       hover:border-lab-accent/20 hover:bg-lab-surface
                        transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed">
-            <ChevronRight className="w-4 h-4 mt-0.5 text-lab-accent/0 group-hover:text-lab-accent/60 transition-all duration-300 shrink-0" />
+            <ChevronRight className="w-4 h-4 mt-0.5 text-lab-accent/0 group-hover:text-lab-accent/60 group-hover:translate-x-0.5 transition-all duration-300 shrink-0" />
             <div>
               <span className="text-sm text-lab-text group-hover:text-lab-text-bright transition-colors duration-300 leading-relaxed block">
                 {ex.text}

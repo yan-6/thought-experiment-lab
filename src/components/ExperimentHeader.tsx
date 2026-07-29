@@ -21,5 +21,5 @@ export default function ExperimentHeader({ experimentId, title, subject, duratio
   );
 }
 function Badge({icon,label,value}:{icon:React.ReactNode;label:string;value:string}) {
-  return <div className="flex flex-col gap-1 p-3 rounded-lg bg-lab-surface/50 border border-lab-border/50"><span className="flex items-center gap-1 text-[10px] font-mono text-lab-text-dim uppercase tracking-wider">{icon}{label}</span><span className="text-sm text-lab-text-bright font-medium truncate">{value}</span></div>;
+  return <div className="card-lift flex flex-col gap-1 p-3 rounded-lg bg-lab-surface/50 border border-lab-border/50"><span className="flex items-center gap-1 text-[10px] font-mono text-lab-text-dim uppercase tracking-wider">{icon}{label}</span><span className="text-sm text-lab-text-bright font-medium truncate">{value}</span></div>;
 }

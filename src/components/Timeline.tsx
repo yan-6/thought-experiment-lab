@@ -19,7 +19,7 @@ export default function Timeline({ items }: Props) {
           {items.map((item, i) => (
             <div key={i} className="relative">
               <div className={`absolute -left-[29px] top-2 w-3 h-3 rounded-full border-2 ${CC[item.impact_level]?.split(" ")[0] || "border-lab-border"}`}><div className={`absolute inset-0.5 rounded-full ${CC[item.impact_level]?.split(" ")[1] || "bg-lab-border"}`}/></div>
-              <div className={`p-4 rounded-lg border ${CC[item.impact_level] || "border-lab-border bg-lab-surface"}`}>
+              <div className={`card-lift p-4 rounded-lg border ${CC[item.impact_level] || "border-lab-border bg-lab-surface"}`}>
                 <div className="flex items-center justify-between mb-2"><span className="text-sm font-bold font-mono text-lab-text-bright">{item.time}</span><span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${CC[item.impact_level]}`}>{CL[item.impact_level] || item.impact_level}</span></div>
                 <h4 className="text-base font-semibold text-lab-text mb-1.5">{item.headline}</h4>
                 <p className="text-sm text-lab-text-dim leading-relaxed">{item.description}</p>

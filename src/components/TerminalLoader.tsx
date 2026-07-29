@@ -66,7 +66,7 @@ export default function TerminalLoader({ experimentTitle, isComplete }: Props) {
   return (
     <div className="w-full max-w-2xl mx-auto space-y-6 animate-fade-in px-4">
       <div className="flex items-center justify-center gap-3 py-4">
-        <div className="w-10 h-10 rounded-lg bg-lab-accent/10 border border-lab-accent/30 flex items-center justify-center animate-pulse-glow"><Cpu className="w-5 h-5 text-lab-accent"/></div>
+        <div className="w-10 h-10 rounded-lg bg-lab-accent/10 border border-lab-accent/30 flex items-center justify-center animate-glow-pulse"><Cpu className="w-5 h-5 text-lab-accent animate-float"/></div>
         <div>
           <p className="text-xs font-mono text-lab-text-dim tracking-wider uppercase">🔬 实验进行中</p>
           <p className="text-sm font-semibold text-lab-text-bright">{experimentTitle}</p>
