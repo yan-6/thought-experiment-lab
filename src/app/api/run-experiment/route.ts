@@ -6,6 +6,7 @@ import { generateDynamicResult } from "@/lib/fallback";
 import { RunRequestSchema } from "@/lib/schemas";
 import { saveExperiment, extractKeywords, searchSimilarExperiments } from "@/lib/storage";
 import { researchHypothesis, basicResearchContext } from "@/lib/webResearch";
+import { fetchDataContext, formatDataContext } from "@/lib/dataBridge";
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -33,7 +34,13 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ─── Try fetching real-world research context for AI ───
+    // ─── Fetch database context from remote_preset + AI research ───
+    let dbSnapshots = [];
+    try {
+      dbSnapshots = await fetchDataContext(experiment);
+      console.log(`Database snapshots loaded: ${dbSnapshots.length} sources`);
+    } catch {}
+
     let researchContext: string | null = null;
     try {
       const research = await researchHypothesis(hypothesis, {
@@ -43,18 +50,24 @@ export async function POST(request: NextRequest) {
         region: experiment.region,
       });
       if (research && research.dataPoints.length > 0) {
-        researchContext = research.dataPoints.join("\n");
-        console.log(`Research data gathered for: ${research.keyword} (${research.dataPoints.length} points)`);
+        const dbBlock = dbSnapshots.length > 0
+          ? formatDataContext(dbSnapshots, experiment) + "\n"
+          : "";
+        researchContext = dbBlock + research.dataPoints.join("\n");
+        console.log(`Research + Database context ready (${researchContext.length} chars)`);
       }
     } catch {
-      // Use basic context as fallback
-      const basic = basicResearchContext({
-        subject: experiment.subject,
-        domains: experiment.affected_domains || [],
-        scope: experiment.scope,
-        region: experiment.region,
-      });
-      researchContext = basic.dataPoints.join("\n");
+      if (dbSnapshots.length > 0) {
+        researchContext = formatDataContext(dbSnapshots, experiment);
+      } else {
+        const basic = basicResearchContext({
+          subject: experiment.subject,
+          domains: experiment.affected_domains || [],
+          scope: experiment.scope,
+          region: experiment.region,
+        });
+        researchContext = basic.dataPoints.join("\n");
+      }
     }
 
     let result;
