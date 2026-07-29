@@ -1,5 +1,6 @@
-import { ExperimentResult } from "@/types/experiment";
+import { ExperimentResult, ExperimentConfig } from "@/types/experiment";
 
+// ─── Static preset — only used as last-resort fallback ───
 export const FALLBACK_EXPERIMENT_CONFIG = {
   title: "微信消失一年",
   subject: "微信及其数字生态（aka 你手机里最胖的那个 App）",
@@ -22,146 +23,238 @@ export const FALLBACK_RESULT: ExperimentResult = {
   experiment: FALLBACK_EXPERIMENT_CONFIG,
   dependency_graph: {
     core: "微信生态系统（一个绿色图标统治的帝国）",
-    direct_nodes: [
-      "即时通讯服务（主要是发「在吗」然后消失）",
-      "移动支付系统（已取代钱包成为人体新器官）",
-      "小程序平台（不用下载但比下载还慢的神奇存在）",
-      "公众号内容生态（标题党总部）",
-      "企业微信办公（下班后继续@你的罪魁祸首）",
-      "朋友圈社交网络（人均岁月静好摄影大赛）",
-    ],
-    secondary_nodes: [
-      "私域流量商业（「加个微信吧」成为2020年代最恐怖情话）",
-      "广告投放渠道（精准到让你怀疑被监听）",
-      "客户关系管理（其实就是群发广告）",
-      "社区团购网络（团长比居委会主任还有号召力）",
-      "政务服务入口（终于不用排队了，但服务器经常崩）",
-      "社交游戏平台（跳一跳：人类的本质是重复）",
-    ],
-    long_term_nodes: [
-      "超级应用是否应该拆分的哲学争论",
-      "去中心化社交的理想与现实差距",
-      "「没有微信我该怎么活」综合征治疗方案",
-      "人类重新学会打电话的奇妙过程",
-      "互联网行业反垄断剧本第二季",
-    ],
+    direct_nodes: ["即时通讯服务", "移动支付系统", "小程序平台", "公众号内容生态", "企业微信办公", "朋友圈社交网络"],
+    secondary_nodes: ["私域流量商业", "广告投放渠道", "客户关系管理", "社区团购网络", "政务服务入口", "社交游戏平台"],
+    long_term_nodes: ["去中心化社交协议", "超级应用竞争格局", "反垄断新规", "人类重新学会打电话", "跨平台互联互通"],
   },
-  direct_effects: [
-    "数亿人突然发现自己不会聊天了（表情包库存瞬间贬值）",
-    "便利店收银台排起长队——「我扫你还是你扫我」成为历史谜题",
-    "朋友圈停更，人均幸福感莫名上升 17%",
-    "小程序开发者集体失业，转行送外卖",
-    "微信群聊消失，家族群被迫转战 QQ，长辈们表示「太花哨了」",
-  ],
-  second_order_effects: [
-    "支付宝连夜开会，笑出声但强装镇定",
-    "抖音火速上线「抖信」，张一鸣：这题我熟",
-    "百度试图复活「百度 Hi」，用户：你是？",
-    "内容创作者连夜搬家，像极了出租屋被强拆",
-    "私域运营从业者开始研究「短信运营」，效果约等于0",
-    "QQ 突然变成国民应用，腾讯内部「左右互搏」名场面",
-  ],
-  unexpected_effects: [
-    "线下相亲活动爆火——「终于不用先加微信了，直接见真人」",
-    "实体名片制造业奇迹般复苏，印刷厂老板感动落泪",
-    "电话恐惧症患者被迫脱敏治疗，通话时长暴涨 300%",
-    "「已读不回」焦虑症彻底痊愈，心理学界欢呼",
-    "部分微商转行做实体店，反而赚更多了（这是一个悲伤的故事）",
-  ],
-  timeline: [
-    {
-      time: "T + 1 天",
-      headline: "全国「断联恐慌」爆发",
-      description:
-        "微信瘫痪第一天。数亿人反复打开微信期待奇迹。朋友圈无法刷新，群聊一片死寂。「我是不是被屏蔽了？」成为当日搜索量最高的问题。便利店老板发现顾客掏不出手机，掏出钱包……上面落了一层灰。",
-      impact_level: "critical",
-    },
-    {
-      time: "T + 7 天",
-      headline: "替代品混战，用户选择困难",
-      description:
-        "支付宝聊天功能日活暴涨 800%。抖音紧急推出「抖一下」。钉钉试图打入 C 端，「钉钉一下」惨遭群嘲。QQ 用户量回到 2015 年水平，马化腾做梦都会笑醒。各平台争抢用户，画风像极了菜市场抢摊位。",
-      impact_level: "high",
-    },
-    {
-      time: "T + 1 月",
-      headline: "「后微信时代」新秩序雏形",
-      description:
-        "用户逐渐习惯多平台生活：支付宝付款+抖音刷视频+QQ聊天+钉钉办公。虽然麻烦但也能活。朋友圈点赞强迫症痊愈。微商开始摆地摊，发现收入竟然翻倍。互联网行业出现「拆解超级App」的呼声。",
-      impact_level: "high",
-    },
-    {
-      time: "T + 3 月",
-      headline: "微信回归传闻四起，真假难辨",
-      description:
-        "每两周就有「微信要回来了」的谣言，每次都能上热搜。网友心态分裂：一半人「快回来吧我想你了」，另一半人「不用了，已经习惯了新生活」。腾讯股价坐上过山车。微信团队在干什么？在开发「微信2.0」——据说这次不会那么臃肿了。",
-      impact_level: "medium",
-    },
-    {
-      time: "T + 1 年",
-      headline: "新格局确立，江湖已变",
-      description:
-        "微信回归后用户量下降 30%，但留下来的都是真爱。多平台共存成为新常态。朋友圈不再是「攀比现场」，变成真正的朋友社交圈。移动支付市场三分天下。互联网行业学到了昂贵的一课：不要把鸡蛋放在一个绿色图标里。",
-      impact_level: "medium",
-    },
-  ],
-  worldlines: [
-    {
-      name: "Worldline A — 光速适应 🚀",
-      likelihood: "More Likely",
-      summary:
-        "微信消失后，市场像饿了三天的人扑向自助餐。支付宝+抖音+QQ 三巨头一周内完成瓜分。用户虽然抱怨「好麻烦要装三个App」，但三个月后全部真香。中国互联网迎来史上最快格局洗牌，腾讯反而因祸得福——同时持有两张王牌（QQ+微信2.0）。",
-      turning_point: "抖音在首周推出「语音通话」功能，年轻用户疯狂涌入",
-      winners: ["字节跳动（终于等到这一天）", "阿里巴巴（支付宝社交梦圆）", "中国电信（5G消息迎来高光时刻）"],
-      losers: ["腾讯（但只伤到皮毛，护城河太深）", "只会用微信做生意的微商", "微信生态里养尊处优的开发者们"],
-      trigger_conditions: [
-        "替代平台立刻开放社交关系导入",
-        "用户对新产品接受度高（反正也不是没换过手机）",
-        "监管不干预市场竞争",
-      ],
-    },
-    {
-      name: "Worldline B — 混乱重建 🌀",
-      likelihood: "Plausible",
-      summary:
-        "没有一个平台能完全替代微信的「全家桶」体验。用户被迫在 5 个 App 之间反复横跳：支付宝付钱、QQ 聊天、抖音刷视频、钉钉办公、美团点外卖。手机内存告急，128G 用户含泪换机。效率下降但人们惊奇地发现：数字生活好像也没那么糟？",
-      turning_point: "用户开始认真比较各平台优劣，发现「垄断的微信确实不太好用」",
-      winners: ["华为/小米/OPPO（换机潮）", "工具型垂直应用（专注一件事反而赢了）", "线下实体店（现金支付回归）"],
-      losers: ["普通用户（App 太多了真的记不住密码）", "超级应用模式（被证伪）", "手机内存不够的用户"],
-      trigger_conditions: [
-        "各平台拒绝互通，形成信息孤岛",
-        "用户对多平台管理感到疲劳但慢慢接受",
-        "手机厂商集体涨价（因为大家都需要更多内存）",
-      ],
-    },
-    {
-      name: "Worldline C — 赛博朋克版 🦾",
-      likelihood: "Edge Case",
-      summary:
-        "微信消失引发连锁信任危机：「如果我依赖的平台随时可能消失，我凭什么相信任何一个？」一场「去平台化」运动兴起。人们开始使用开源通讯协议、自建服务器、去中心化社交网络。听起来很酷，实际上只有程序员玩得转。普通人：「能不能来个简单点的？」",
-      turning_point: "某个知名技术博主发帖：「我三天没用任何大厂App，活得很好」引发热议",
-      winners: ["开源社区（终于被主流看见了）", "区块链项目（虽然还是没几个人懂）", "程序员（社交地位飙升）"],
-      losers: ["所有中心化科技巨头", "不会写代码的普通人（这个世界越来越不友好）", "投资人（模式太新看不懂）"],
-      trigger_conditions: [
-        "发生大规模数据泄露丑闻",
-        "用户对平台的信任度降到冰点",
-        "某个开源替代品使用体验突然变好用（可能性≈中彩票）",
-      ],
-    },
-  ],
-  constraint_conflicts: [
-    {
-      conflict: "微信消失了但「互联网基础设施正常运行」——那微信服务器不就是互联网基础设施的一部分吗？",
-      reason: "这个前提自相矛盾。微信服务器的物理存在本身就是互联网基础设施的组成部分。它们不会魔法般地蒸发。",
-      suggested_fix: "改成「微信被政府法规强制下架，但其他互联网服务不受影响」，这样就合逻辑了。或者干脆说外星人干的。",
-    },
-  ],
-  biggest_winners: ["字节跳动（最开心的人）", "阿里巴巴（多年的社交梦终于成真）", "卖手机内存的（每个人都装了5个替代App）", "线下打印店（纸质二维码文艺复兴）", "腾讯（等等，他们还有QQ……）"],
-  biggest_losers: ["微信小程序开发者（一觉醒来饭碗没了）", "只学了微信运营的打工人（简历突然贬值）", "靠微信吃饭的私域流量贩子", "表情包设计师（库存清零）", "马化腾（虽然还有QQ但面子挂不住）"],
-  first_breaking_point: "微信支付功能停用的那一刻——不是聊天先崩，是钱。永远都是钱。",
-  hardest_to_replace: "微信里沉淀的社交关系和聊天记录——那些深夜情绪崩溃的对话、暧昧的「在吗」、和已经绝交的朋友的最后一条消息",
-  new_thing_created: "「社交数据可迁移权」——用户可以把自己的好友列表、聊天记录打包带走，像换手机号一样换社交平台。这可能是微信消失带来的唯一真正进步。",
-  final_insight:
-    "微信消失不会让数字生活回到过去，只会让互联网找到一个新入口——而这一次，但愿这个入口不止一个。毕竟，「别把所有鸡蛋放在一个篮子里」这句话，不仅适用于投资，也适用于你每天打开 80 次的那个绿色图标。",
-  disclaimer: "本结果为 AI 辅助的结构化思维实验。文章里的段子是真的，预测是假的。请勿当真，更请勿据此做空腾讯。",
+  direct_effects: [],
+  second_order_effects: [],
+  unexpected_effects: [],
+  timeline: [],
+  worldlines: [],
+  constraint_conflicts: [],
+  biggest_winners: [],
+  biggest_losers: [],
+  first_breaking_point: "",
+  hardest_to_replace: "",
+  new_thing_created: "",
+  final_insight: "",
+  disclaimer: "本结果为 AI 辅助的结构化思维实验。文章里的段子是真的，预测是假的。",
 };
+
+// ═══════════════════════════════════════════════════════════
+// Dynamic fallback — generates unique results per hypothesis
+// ═══════════════════════════════════════════════════════════
+
+function pick<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function hash(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+/** extract a 2-4 character keyword from the end-user hypothesis */
+function extractKeyword(hypothesis: string): string {
+  const cleaned = hypothesis.replace(/^(如果|假如|假设|要是|一旦)\s*/i, "").replace(/[？?。.!！~～,，\s]*(会发生什么|会怎样|会如何|会怎么样|怎么样|如何|怎么办|呢|吗)?[？?。.!！~～]*$/, "");
+  return cleaned.slice(0, 8).trim() || cleaned.slice(0, 8).trim();
+}
+
+/** direction words for generating varied worldline summaries */
+const DIRECTIONS = ["乐观版", "悲观版", "魔幻版"];
+const LIKELIHOODS = ["More Likely", "Plausible", "Edge Case"] as const;
+const IMPACT_LEVELS = ["critical", "high", "high", "medium", "medium", "low"] as const;
+
+const TIMELINE_LABELS = [
+  { label: "T + 1 天", headline: "第一波冲击来了" },
+  { label: "T + 1 周", headline: "连锁反应开始扩散" },
+  { label: "T + 1 月", headline: "旧秩序瓦解，新势力登场" },
+  { label: "T + 3 月", headline: "各方博弈白热化" },
+  { label: "T + 1 年", headline: "新常态确立" },
+];
+
+interface TemplateSlots {
+  subject: string;
+  title: string;
+  change: string;
+  keyword: string;
+  scope: string;
+  region: string;
+  duration: string;
+  domains: string[];
+  adaptSpeed: string;
+}
+
+function buildTemplates(s: TemplateSlots) {
+  const { subject, title, keyword, scope, region, domains, change } = s;
+  const d1 = domains[0] || "社会经济";
+  const d2 = domains[1] || domains[0] || "日常生活";
+
+  return {
+    directEffects: [
+      `${region}的${d1}体系遭受直接冲击——${keyword}突然消失/改变，相关从业者一脸懵`,
+      `${subject}的突然变动引发 ${d2} 领域的连锁紊乱，短期内出现混乱`,
+      `与${subject}直接相关的${d1}产业链面临断崖式调整，从业者开始疯狂刷招聘软件`,
+      `${scope}范围内的${d2}模式被迫重构，旧有的习惯一夜之间全部作废`,
+      `围绕${keyword}建立起来的一整套游戏规则瞬间失效，既得利益者们开始手忙脚乱`,
+    ],
+    secondOrderEffects: [
+      `${d1}的震荡波传导到${d2}领域——本来觉得跟自己没关系的人突然发现自己也被卷进去了`,
+      `替代方案开始涌现，但每个替代方案都引发了意料之外的连锁问题`,
+      `围绕${subject}缺失形成的新商业模式迅速出现，像雨后蘑菇一样，有毒没毒还不确定`,
+      `${scope}范围内的政策制定者开始紧急开会，互联网上出现了至少 37 种互相矛盾的解读`,
+      `${d2}行业重新洗牌，曾经的边缘玩家意外获得了出头机会`,
+      `一波围绕「后${keyword}时代」的创业潮袭来，投资人疯狂撒币但大部分会打水漂`,
+    ],
+    unexpectedEffects: [
+      `原本跟${subject}八竿子打不着的行业竟然意外受益——世界就是这么不讲道理`,
+      `${region}人民的某个人类本能行为突然回归（比如面对面聊天、手写书信等复古操作）`,
+      `一种「泛${keyword}焦虑症」在社交媒体上传播——虽然大部分人其实并不真的受影响`,
+      `${subject}的变化意外引发了对一个更深层社会问题的讨论`,
+      `一小撮人靠着炒作「${title}」概念发了大财，而真正受影响的人还在发朋友圈吐槽`,
+    ],
+    worldlineSummaries: [
+      `${subject}的变化被市场快速消化，${region}展现出惊人的适应力。短期阵痛后，新的${d1}生态在这一年中迅速成型，最终比原来更多元、更有弹性。`,
+      `${subject}的变化引发连锁崩溃，${d2}等多个领域受到波及。重建过程缓慢而痛苦，${region}在这一年里经历了「断奶」的剧烈阵痛。`,
+      `${subject}的变化触发了完全意料之外的蝴蝶效应，一路狂奔向荒诞的方向。${region}在这一年里见证了一系列黑天鹅事件，最终结果让所有预言家颜面扫地。`,
+    ],
+  };
+}
+
+function generateTimeline(s: TemplateSlots) {
+  const { subject, keyword, region, domains } = s;
+  const d1 = domains[0] || "该领域";
+  return TIMELINE_LABELS.map((t, i) => ({
+    time: t.label,
+    headline: `${t.headline}：${subject}影响下的${region}`,
+    description: i === 0
+      ? `${keyword}的变化在第一条发生，${region}各界反应从「不至于吧」到「卧槽真的假的」仅用了几个小时。${d1}相关从业者开始紧急评估影响。社交媒体上出现大量段子和少量恐慌。`
+      : i === 1
+      ? `冲击波从${d1}蔓延到更多领域。媒体开始用「后${keyword}时代」来概括这个新世界。专家们纷纷发表观点，其中至少有一半是互相矛盾的。普通居民开始认真思考：这对我到底意味着什么？`
+      : i === 2
+      ? `围绕「后${keyword}时代」的讨论进入深水区。有人呼吁回归传统，有人主张全面拥抱变化。${region}各界力量开始博弈，新的利益格局在混乱中逐渐成型。`
+      : i === 3
+      ? `${keyword}变化引发的震荡开始沉淀为结构性改变。一些适应快的群体已经找到了新活法，而反应慢的群体还在怀念「那个有${subject}的好时光」。${region}出现了一批「${keyword}难民」和一批「${keyword}淘金者」。`
+      : `一年过去，${region}人民惊觉自己已经习惯了没有${subject}（或者说${subject}变样后）的生活。历史学者开始撰文：「${keyword}事件将被称为这个时代的转折点。」当然，也可能只是普通人茶余饭后的一个话题罢了。`,
+    impact_level: IMPACT_LEVELS[i],
+  }));
+}
+
+function generateWorldlines(s: TemplateSlots) {
+  const { subject, keyword, region, domains, title } = s;
+  const d1 = domains[0] || "该领域";
+  const summaries = buildTemplates(s).worldlineSummaries;
+
+  return [
+    {
+      name: `Worldline A — ${DIRECTIONS[0]} 😎`,
+      likelihood: LIKELIHOODS[0],
+      summary: summaries[0],
+      turning_point: `一家创业公司推出「${keyword}替代方案2.0」，用户发现新方案竟然比原来好用一点点`,
+      winners: [`率先拥抱变化的${d1}从业者`, `做${keyword}替代方案的创业者`, `${region}的灵活适应者`],
+      losers: [`死守旧模式的${d1}顽固派`, `以为${subject}会恢复原样的天真投资人`, `靠信息差吃饭的中间商`],
+      trigger_conditions: [
+        `${region}社会有较强的适应能力和容错空间`,
+        `技术方案能够快速填补${subject}缺失的空白`,
+        `没有外部力量强行干预市场自组织`,
+      ],
+    },
+    {
+      name: `Worldline B — ${DIRECTIONS[1]} 🫠`,
+      likelihood: LIKELIHOODS[1],
+      summary: summaries[1],
+      turning_point: `一个关键节点——连替代方案都出现问题时，人们才意识到${subject}原来如此不可替代`,
+      winners: [`坚持做多手准备的${d1}老手`, `危机公关公司（业务量大增）`, `教人「如何在${title}中生存」的知识付费博主`],
+      losers: [`过度依赖单一${d1}体系的人`, `${region}的保守派（被迫改变最痛苦）`, `在混乱中站错队的人`],
+      trigger_conditions: [
+        `各利益方互相扯皮，迟迟不能达成共识`,
+        `替代方案出现严重的技术或管理问题`,
+        `${region}社会对变化缺乏心理准备`,
+      ],
+    },
+    {
+      name: `Worldline C — ${DIRECTIONS[2]} 🤪`,
+      likelihood: LIKELIHOODS[2],
+      summary: summaries[2],
+      turning_point: `一个完全没有人预料到的黑天鹅事件——跟${subject}八竿子打不着的某个领域意外爆雷`,
+      winners: [`囤积了大量${keyword}相关资源的投机者`, `写${title}畅销书的作者`, `拍${title}纪录片的导演（Netflix 投资）`],
+      losers: [`相信一切会按「正常逻辑」发展的人`, `所有试图预测结果的专家（集体翻车）`, `在荒诞中仍然坚持理性的人`],
+      trigger_conditions: [
+        `多个低概率事件同时发生`,
+        `${region}内部出现意料之外的连锁效应`,
+        `人类在${subject}变化后做出非理性集体行为`,
+      ],
+    },
+  ];
+}
+
+/** ─── The main dynamic generator ─── */
+export function generateDynamicResult(
+  hypothesis: string,
+  config: ExperimentConfig
+): ExperimentResult {
+  const keyword = extractKeyword(hypothesis);
+  const slots: TemplateSlots = {
+    subject: config.subject || keyword,
+    title: config.title || `${keyword}的${config.duration || "一段时间"}`,
+    change: config.change || hypothesis,
+    keyword,
+    scope: config.scope || "国家",
+    region: config.region || "相关区域",
+    duration: config.duration || "一年",
+    domains: config.affected_domains.length > 0 ? config.affected_domains : ["社会经济", "日常生活", "科技产业"],
+    adaptSpeed: config.adaptation_speed || "中等",
+  };
+
+  const t = buildTemplates(slots);
+  const depCore = `${slots.subject}（${slots.keyword}相关生态体系）`;
+  const depDirect = slots.domains.map((d) => `${d}系统`) as string[];
+  const depSecond = slots.domains.map((d) => `${d}上下游产业链`) as string[];
+  const depLong = [
+    `「后${slots.keyword}时代」新社会契约`,
+    `去中心化替代方案能否成功`,
+    `${slots.region}${slots.scope}范围内的规则重构`,
+  ];
+
+  // ensure at least meaningful arrays
+  const directNodes = depDirect.length >= 3 ? depDirect : [...depDirect, "相关基础设施", "用户习惯与认知", "法律法规体系"];
+  const secondaryNodes = depSecond.length >= 3 ? depSecond : [...depSecond, "周边服务生态", "教育培训体系", "金融服务网络"];
+  const longTermNodes = depLong.length >= 3 ? depLong : [...depLong, "社会信任机制重建", "新型协作模式"];
+
+  return {
+    experiment: config,
+    dependency_graph: {
+      core: depCore,
+      direct_nodes: directNodes.slice(0, 6),
+      secondary_nodes: secondaryNodes.slice(0, 8),
+      long_term_nodes: longTermNodes.slice(0, 5),
+    },
+    direct_effects: t.directEffects.slice(0, 5),
+    second_order_effects: t.secondOrderEffects.slice(0, 6),
+    unexpected_effects: t.unexpectedEffects.slice(0, 5),
+    timeline: generateTimeline(slots),
+    worldlines: generateWorldlines(slots),
+    constraint_conflicts: [],
+    biggest_winners: [
+      `提前布局「后${slots.keyword}时代」的远见者`,
+      `提供${slots.domains[0] || "该领域"}替代方案的创业者`,
+      `因${slots.subject}变化而意外获益的边缘玩家`,
+      `${slots.region}的灵活适应者`,
+      `在这场变化中保持冷静的长期主义者`,
+    ],
+    biggest_losers: [
+      `过度依赖${slots.subject}原状态的既得利益者`,
+      `反应迟钝的传统${slots.domains[0] || "行业"}巨头`,
+      `在${config.duration || "这段时间"}内押错方向的投机者`,
+      `只会用一种方式做事而不愿改变的群体`,
+      `被这场变化打乱人生计划的所有普通人`,
+    ],
+    first_breaking_point: `${slots.domains[0] || "核心系统"}的失灵——每次剧变都是从最脆弱的那根链条开始断裂的`,
+    hardest_to_replace: `${slots.subject}所承载的社会关系与日常习惯——技术可以复制，但沉淀下来的生活方式没法 Ctrl+C`,
+    new_thing_created: `围绕「${slots.keyword}替代方案」生长出来的全新产业生态——人类在被逼无奈的时候创造力总是爆棚`,
+    final_insight: `${slots.subject}的变化不是末日，而是一面镜子——照出我们曾经以为理所当然的一切，原来都建立在多么脆弱的假设之上。而每次「重新开始」，都是一次重新选择的奢侈。`,
+    disclaimer: `本结果为 AI 辅助的结构化思维实验。以上推演基于「${slots.subject}」的假设生成，仅供参考娱乐。段子是真的，预测是假的。请勿当真，更请勿据此做任何人生重大决策。`,
+  };
+}

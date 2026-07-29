@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { callInfiniSynapse } from "@/lib/infinisynapse";
 import { RUN_EXPERIMENT_SYSTEM, buildRunExperimentPrompt } from "@/lib/prompts";
 import { parseExperimentResult, generateExperimentId } from "@/lib/parser";
-import { FALLBACK_RESULT } from "@/lib/fallback";
+import { generateDynamicResult } from "@/lib/fallback";
 import { RunRequestSchema } from "@/lib/schemas";
 
 export async function POST(request: NextRequest) {
@@ -42,8 +42,8 @@ export async function POST(request: NextRequest) {
     } catch (apiErr) {
       console.warn("InfiniSynapse unavailable, using fallback result:", (apiErr instanceof Error ? apiErr.message : "unknown"));
       usedFallback = true;
-      // Use fallback result but inject the user's experiment config
-      result = { ...FALLBACK_RESULT, experiment: experiment };
+      // Generate dynamic result based on user's actual hypothesis + config
+      result = generateDynamicResult(hypothesis, experiment);
     }
 
     const durationMs = Date.now() - startTime;
