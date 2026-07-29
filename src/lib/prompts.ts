@@ -60,12 +60,12 @@ export const RUN_EXPERIMENT_SYSTEM = `你是 Thought Experiment Lab 的世界模
 
 export function buildRunExperimentPrompt(
   hypothesis: string,
-  config: Record<string, unknown>
+  config: Record<string, unknown>,
+  researchContext?: string | null
 ): string {
-  return `实验假设：${hypothesis}
-
-实验配置：
-${JSON.stringify(config, null, 2)}
-
-请基于以上信息运行一次结构化思维实验。记住：逻辑要在线，表达要有趣。严格按 JSON Schema 返回。`;
+  const block = researchContext
+    ? `\n━━━━━━ 真实数据背景 ━━━━━━\n${researchContext}\n━━━━━━━━━━━━━━━━━━━━\n`
+    : "";
+  const note = researchContext ? "利用真实数据增强可信度，但不要被数据束缚想象力。" : "";
+  return `实验假设：${hypothesis}\n\n实验配置：${JSON.stringify(config, null, 2)}\n${block}\n请基于以上信息运行一次结构化思维实验。${note}记住：逻辑要在线，表达要有趣。严格按 JSON Schema 返回。`;
 }

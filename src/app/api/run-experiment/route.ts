@@ -4,6 +4,8 @@ import { RUN_EXPERIMENT_SYSTEM, buildRunExperimentPrompt } from "@/lib/prompts";
 import { parseExperimentResult, generateExperimentId } from "@/lib/parser";
 import { generateDynamicResult } from "@/lib/fallback";
 import { RunRequestSchema } from "@/lib/schemas";
+import { saveExperiment, extractKeywords, searchSimilarExperiments } from "@/lib/storage";
+import { researchHypothesis, basicResearchContext } from "@/lib/webResearch";
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
@@ -31,32 +33,103 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // ─── Try fetching real-world research context for AI ───
+    let researchContext: string | null = null;
+    try {
+      const research = await researchHypothesis(hypothesis, {
+        subject: experiment.subject,
+        domains: experiment.affected_domains || [],
+        scope: experiment.scope,
+        region: experiment.region,
+      });
+      if (research && research.dataPoints.length > 0) {
+        researchContext = research.dataPoints.join("\n");
+        console.log(`Research data gathered for: ${research.keyword} (${research.dataPoints.length} points)`);
+      }
+    } catch {
+      // Use basic context as fallback
+      const basic = basicResearchContext({
+        subject: experiment.subject,
+        domains: experiment.affected_domains || [],
+        scope: experiment.scope,
+        region: experiment.region,
+      });
+      researchContext = basic.dataPoints.join("\n");
+    }
+
     let result;
 
     try {
       const rawResponse = await callInfiniSynapse([
         { role: "system", content: RUN_EXPERIMENT_SYSTEM },
-        { role: "user", content: buildRunExperimentPrompt(hypothesis, experiment as unknown as Record<string, unknown>) },
+        {
+          role: "user",
+          content: buildRunExperimentPrompt(
+            hypothesis,
+            experiment as unknown as Record<string, unknown>,
+            researchContext
+          ),
+        },
       ], { temperature: 0.8, maxTokens: 4096 });
       result = parseExperimentResult(rawResponse);
     } catch (apiErr) {
-      console.warn("InfiniSynapse unavailable, using fallback result:", (apiErr instanceof Error ? apiErr.message : "unknown"));
+      console.warn("InfiniSynapse unavailable, using fallback:", (apiErr instanceof Error ? apiErr.message : "unknown"));
       usedFallback = true;
-      // Generate dynamic result based on user's actual hypothesis + config
       result = generateDynamicResult(hypothesis, experiment);
+      // Inject research context into result for frontend display
+      if (researchContext) {
+        result.unexpected_effects = [
+          `💡 实验背景数据：${researchContext.split("\n")[0] || ""}`,
+          ...result.unexpected_effects,
+        ].slice(0, 5);
+      }
     }
 
     const durationMs = Date.now() - startTime;
+    const provider = usedFallback ? "Fallback" : "InfiniSynapse";
+
+    // ─── Save to experiment history ───
+    try {
+      saveExperiment({
+        id: experimentId,
+        hypothesis: hypothesis.trim(),
+        title: result.experiment.title,
+        subject: result.experiment.subject,
+        duration: result.experiment.duration,
+        scope: result.experiment.scope,
+        timestamp: new Date().toISOString(),
+        provider,
+        finalInsight: result.final_insight,
+        keywords: extractKeywords(hypothesis),
+      });
+    } catch (storageErr) {
+      console.warn("Failed to save experiment:", storageErr);
+    }
+
+    // ─── Find similar past experiments ───
+    let similarExperiments: unknown[] = [];
+    try {
+      similarExperiments = searchSimilarExperiments(hypothesis, 3);
+    } catch {}
 
     console.log({
-      experimentId, provider: usedFallback ? "Fallback" : "InfiniSynapse",
-      durationMs, success: true, parseSuccess: true, hypothesisLength: hypothesis.length,
+      experimentId, provider, durationMs,
+      hasResearch: !!researchContext,
+      similarCount: similarExperiments.length,
+      success: true, parseSuccess: true,
+      hypothesisLength: hypothesis.length,
     });
 
     return NextResponse.json({
       success: true,
       data: result,
-      meta: { experiment_id: experimentId, duration_ms: durationMs, provider: usedFallback ? "Fallback" : "InfiniSynapse" },
+      meta: {
+        experiment_id: experimentId,
+        duration_ms: durationMs,
+        provider,
+        research_context: researchContext,
+        similar_experiments: similarExperiments.slice(0, 3),
+      },
     });
   } catch (err) {
     const durationMs = Date.now() - startTime;
