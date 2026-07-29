@@ -12,7 +12,7 @@ export default function FinalInsightCard({ insight }: Props) {
         <div className="absolute bottom-0 right-0 w-12 h-12 border-b-2 border-r-2 border-lab-accent/30 rounded-br-xl"/>
         <div className="flex items-start gap-4">
           <Quote className="w-6 h-6 text-lab-accent/60 shrink-0 mt-1"/>
-          <div><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider mb-3">Final Insight</p><p className="text-lg sm:text-xl leading-relaxed text-lab-text-bright font-light">{insight}</p></div>
+          <div><p className="text-xs font-mono text-lab-text-dim uppercase tracking-wider mb-3">💡 一句话总结（可截图发朋友圈）</p><p className="text-lg sm:text-xl leading-relaxed text-lab-text-bright font-light">{insight}</p></div>
         </div>
       </div>
     </div>

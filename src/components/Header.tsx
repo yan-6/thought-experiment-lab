@@ -15,7 +15,7 @@ export default function Header() {
           </span>
           <span className="text-[10px] font-mono text-lab-text-dim tracking-[0.15em] uppercase flex items-center gap-1">
             <Globe className="w-2.5 h-2.5" />
-            World Simulation Interface
+            一本正经地胡说八道 · 世界脑洞模拟器
           </span>
         </div>
       </div>

@@ -12,7 +12,7 @@ export default function Timeline({ items }: Props) {
   if (!items || items.length === 0) return null;
   return (
     <div className="animate-slide-up" style={{ animationDelay: "0.3s" }}>
-      <div className="flex items-center gap-2 mb-4"><Clock className="w-4 h-4 text-lab-accent"/><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">Chain Reaction Timeline</h3></div>
+      <div className="flex items-center gap-2 mb-4"><Clock className="w-4 h-4 text-lab-accent"/><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">⏱️ 连锁反应时间线（多米诺骨牌第一视角）</h3></div>
       <div className="relative pl-8">
         <div className="absolute left-[11px] top-2 bottom-2 w-0.5 bg-lab-border"/>
         <div className="space-y-6">

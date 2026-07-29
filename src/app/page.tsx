@@ -73,11 +73,11 @@ export default function Home() {
         return result ? (<div className="py-6 px-4 max-w-4xl mx-auto space-y-8">
           <ExperimentHeader experimentId={experimentId} title={result.experiment.title} subject={result.experiment.subject} duration={result.experiment.duration} region={result.experiment.region} durationMs={durationMs}/>
           <FinalInsightCard insight={result.final_insight}/>
-          <section className="animate-slide-up space-y-3" style={{animationDelay:"0.15s"}}><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">Experiment Definition</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm"><Def l="Subject" v={result.experiment.subject}/><Def l="Change" v={result.experiment.change}/><Def l="Duration" v={result.experiment.duration}/><Def l="Scope" v={result.experiment.scope}/><Def l="Region" v={result.experiment.region}/><Def l="Adaptation" v={result.experiment.adaptation_speed}/></div></section>
+          <section className="animate-slide-up space-y-3" style={{animationDelay:"0.15s"}}><h3 className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">📋 实验定义（你假设了什么）</h3><div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm"><Def l="对象" v={result.experiment.subject}/><Def l="变化" v={result.experiment.change}/><Def l="时长" v={result.experiment.duration}/><Def l="范围" v={result.experiment.scope}/><Def l="地区" v={result.experiment.region}/><Def l="适应速度" v={result.experiment.adaptation_speed}/></div></section>
           <DependencyMap graph={result.dependency_graph}/>
           <Timeline items={result.timeline}/>
           <UnexpectedOutcomes outcomes={result.unexpected_effects}/>
-          <section className="animate-slide-up space-y-4" style={{animationDelay:"0.4s"}}><div className="flex items-center gap-2"><span className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">Alternate Worlds</span></div><div className="grid grid-cols-1 md:grid-cols-3 gap-4">{result.worldlines.map((wl,i)=><WorldlineCard key={i} worldline={wl} index={i}/>)}</div></section>
+          <section className="animate-slide-up space-y-4" style={{animationDelay:"0.4s"}}><div className="flex items-center gap-2"><span className="text-sm font-mono text-lab-text-dim uppercase tracking-wider">🌍 平行世界（三种可能的未来）</span></div><div className="grid grid-cols-1 md:grid-cols-3 gap-4">{result.worldlines.map((wl,i)=><WorldlineCard key={i} worldline={wl} index={i}/>)}</div></section>
           <WinnersLosers winners={result.biggest_winners} losers={result.biggest_losers} firstBreakingPoint={result.first_breaking_point} hardestToReplace={result.hardest_to_replace} newThingCreated={result.new_thing_created}/>
           <ConstraintConflicts conflicts={result.constraint_conflicts}/>
           <p className="text-center text-[10px] text-lab-text-dim/40 font-mono tracking-wider pt-4">{result.disclaimer}</p>
@@ -88,7 +88,7 @@ export default function Home() {
     }
   };
 
-  return (<main className="min-h-screen">{appState!=="RUNNING"&&appState!=="RESULT"&&appState!=="ERROR"&&<Header/>}{renderState()}<footer className="w-full py-8 text-center"><p className="text-[10px] font-mono text-lab-text-dim/30 tracking-[0.2em] uppercase">Thought Experiment Lab • World Simulation Interface • v1.0 MVP</p></footer></main>);
+  return (<main className="min-h-screen">{appState!=="RUNNING"&&appState!=="RESULT"&&appState!=="ERROR"&&<Header/>}{renderState()}<footer className="w-full py-8 text-center"><p className="text-[10px] font-mono text-lab-text-dim/30 tracking-[0.15em] uppercase">🧪 脑洞实验室 v1.0 · 纯属娱乐 · 请勿作为人生决策依据</p></footer></main>);
 }
 
 function Def({l,v}:{l:string;v:string}){return (<div className="flex items-center gap-2 p-3 rounded-lg bg-lab-surface/30 border border-lab-border/50"><span className="text-[10px] font-mono text-lab-text-dim uppercase tracking-wider shrink-0">{l}:</span><span className="text-sm text-lab-text truncate">{v}</span></div>);}
