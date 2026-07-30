@@ -6,6 +6,8 @@ import { FALLBACK_EXPERIMENT_CONFIG } from "@/lib/fallback";
 import { ParseRequestSchema } from "@/lib/schemas";
 import type { ExperimentConfig } from "@/types/experiment";
 
+export const dynamic = "force-dynamic";
+
 function generateConfigFromHypothesis(hypothesis: string): ExperimentConfig {
   const title = hypothesis.replace(/^(如果|假如|假设)\s*/i, "").replace(/[？?。.]$/, "").slice(0, 30);
   return {

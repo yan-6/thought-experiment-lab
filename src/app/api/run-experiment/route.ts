@@ -8,6 +8,8 @@ import { saveExperiment, extractKeywords, searchSimilarExperiments } from "@/lib
 import { researchHypothesis, basicResearchContext } from "@/lib/webResearch";
 import { fetchDataContext, formatDataContext } from "@/lib/dataBridge";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: NextRequest) {
   const startTime = Date.now();
   const experimentId = generateExperimentId();
@@ -25,6 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { hypothesis, experiment } = parsed.data;
+    const regionLabel = experiment.scope === "全球" ? "全球" : "相关地区";
 
     const unsafePatterns = [/自[杀残]/, /暴力/, /犯罪/, /[制炸]药/, /诊断/, /政治[操操]/, /隐私攻击/];
     if (unsafePatterns.some((p) => p.test(hypothesis))) {
@@ -35,9 +38,11 @@ export async function POST(request: NextRequest) {
     }
 
     // ─── Fetch database context from remote_preset + AI research ───
-    let dbSnapshots = [];
+    let dbSnapshots: Awaited<ReturnType<typeof fetchDataContext>> = [];
     try {
-      dbSnapshots = await fetchDataContext(experiment);
+      dbSnapshots = await fetchDataContext(experiment, {
+        baseUrl: request.nextUrl.origin,
+      });
       console.log(`Database snapshots loaded: ${dbSnapshots.length} sources`);
     } catch {}
 
@@ -47,7 +52,7 @@ export async function POST(request: NextRequest) {
         subject: experiment.subject,
         domains: experiment.affected_domains || [],
         scope: experiment.scope,
-        region: experiment.region,
+        region: regionLabel,
       });
       if (research && research.dataPoints.length > 0) {
         const dbBlock = dbSnapshots.length > 0
@@ -64,7 +69,7 @@ export async function POST(request: NextRequest) {
           subject: experiment.subject,
           domains: experiment.affected_domains || [],
           scope: experiment.scope,
-          region: experiment.region,
+          region: regionLabel,
         });
         researchContext = basic.dataPoints.join("\n");
       }

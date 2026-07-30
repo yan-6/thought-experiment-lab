@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const res = await fetch(`${process.env.INFINISYNAPSE_API_URL || "http://localhost:3000"}/api/sql/credit-card`, {

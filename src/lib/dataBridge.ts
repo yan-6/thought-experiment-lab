@@ -10,31 +10,37 @@ interface DataSnapshot {
   facts: string[];
 }
 
+interface DataContextOptions {
+  baseUrl?: string;
+}
+
 /** Main entry: fetch relevant data based on experiment config */
 export async function fetchDataContext(
-  config: ExperimentConfig
+  config: ExperimentConfig,
+  options: DataContextOptions = {}
 ): Promise<DataSnapshot[]> {
   const domains = config.affected_domains.map((d) => d.toLowerCase());
   const snapshots: DataSnapshot[] = [];
+  const apiBaseUrl = resolveApiBaseUrl(options.baseUrl);
 
   // Match domains to available datasets
   if (domains.some((d) => d.includes("经济") || d.includes("金融") || d.includes("支付") || d.includes("消费"))) {
     try {
-      const s = await getCreditCardSnapshot();
+      const s = await getCreditCardSnapshot(apiBaseUrl);
       if (s) snapshots.push(s);
     } catch {}
   }
 
   if (domains.some((d) => d.includes("商业") || d.includes("零售") || d.includes("电商") || d.includes("市场"))) {
     try {
-      const s = await getSalesSnapshot();
+      const s = await getSalesSnapshot(apiBaseUrl);
       if (s) snapshots.push(s);
     } catch {}
   }
 
   if (domains.some((d) => d.includes("办公") || d.includes("就业") || d.includes("职场") || d.includes("人力"))) {
     try {
-      const s = await getEmployeeSnapshot();
+      const s = await getEmployeeSnapshot(apiBaseUrl);
       if (s) snapshots.push(s);
     } catch {}
   }
@@ -47,9 +53,16 @@ export async function fetchDataContext(
   return snapshots;
 }
 
-async function getCreditCardSnapshot(): Promise<DataSnapshot | null> {
+function resolveApiBaseUrl(baseUrl?: string): string {
+  if (baseUrl) return baseUrl;
+  if (process.env.NEXT_PUBLIC_SITE_URL) return process.env.NEXT_PUBLIC_SITE_URL;
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  return "http://localhost:3000";
+}
+
+async function getCreditCardSnapshot(apiBaseUrl: string): Promise<DataSnapshot | null> {
   try {
-    const res = await fetch("http://localhost:3000/api/data/credit-card", { cache: "no-store" });
+    const res = await fetch(`${apiBaseUrl}/api/data/credit-card`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
     if (!data.success) return null;
@@ -70,9 +83,9 @@ async function getCreditCardSnapshot(): Promise<DataSnapshot | null> {
   }
 }
 
-async function getSalesSnapshot(): Promise<DataSnapshot | null> {
+async function getSalesSnapshot(apiBaseUrl: string): Promise<DataSnapshot | null> {
   try {
-    const res = await fetch("http://localhost:3000/api/data/sales", { cache: "no-store" });
+    const res = await fetch(`${apiBaseUrl}/api/data/sales`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
     if (!data.success) return null;
@@ -93,9 +106,9 @@ async function getSalesSnapshot(): Promise<DataSnapshot | null> {
   }
 }
 
-async function getEmployeeSnapshot(): Promise<DataSnapshot | null> {
+async function getEmployeeSnapshot(apiBaseUrl: string): Promise<DataSnapshot | null> {
   try {
-    const res = await fetch("http://localhost:3000/api/data/employees", { cache: "no-store" });
+    const res = await fetch(`${apiBaseUrl}/api/data/employees`, { cache: "no-store" });
     if (!res.ok) return null;
     const data = await res.json();
     if (!data.success) return null;

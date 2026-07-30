@@ -42,11 +42,15 @@ export function parseExperimentResult(raw: string): ExperimentResult {
   }
 }
 
-function deepMerge(target: Record<string, unknown>, source: Record<string, unknown>): ExperimentResult {
-  const merged = { ...target };
+function deepMerge(
+  target: ExperimentResult | Record<string, unknown>,
+  source: Record<string, unknown>
+): ExperimentResult {
+  const targetRecord = target as Record<string, unknown>;
+  const merged: Record<string, unknown> = { ...targetRecord };
   for (const key of Object.keys(source)) {
     const sv = source[key];
-    const tv = target[key];
+    const tv = targetRecord[key];
     if (Array.isArray(sv) && Array.isArray(tv) && sv.length > 0) {
       merged[key] = sv;
     } else if (
@@ -58,7 +62,7 @@ function deepMerge(target: Record<string, unknown>, source: Record<string, unkno
       merged[key] = sv;
     }
   }
-  return merged as ExperimentResult;
+  return merged as unknown as ExperimentResult;
 }
 
 export function validateHypothesis(hypothesis: string): { valid: boolean; error?: string } {

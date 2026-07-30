@@ -1,4 +1,9 @@
-import { ExperimentResult, ExperimentConfig } from "@/types/experiment";
+import {
+  ExperimentResult,
+  ExperimentConfig,
+  TimelineItem,
+  Worldline,
+} from "@/types/experiment";
 
 export const FALLBACK_EXPERIMENT_CONFIG = {
   title: "微信消失一年",
@@ -65,7 +70,7 @@ function buildTemplates(s: S) {
   };
 }
 
-function generateTimeline(s: S) {
+function generateTimeline(s: S): TimelineItem[] {
   const { subject, keyword, domains } = s;
   const d1 = domains[0] || "该领域";
 
@@ -103,7 +108,7 @@ function generateTimeline(s: S) {
   ];
 }
 
-function generateWorldlines(s: S) {
+function generateWorldlines(s: S): Worldline[] {
   const { subject, keyword, domains, title } = s;
   const d1 = domains[0] || "该领域";
 

@@ -1,0 +1,16 @@
+node_modules
+build
+dist
+.git
+.trae
+.log
+.figma
+.infini
+execute_infinity_sql
+read_image
+register_table
+show_create
+use_rag_tool
+web_search
+images
+.vercel-tmp
