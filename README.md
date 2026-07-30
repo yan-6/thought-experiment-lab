@@ -1,63 +1,186 @@
-# Thought Experiment Lab (思维实验室)
+<div align="center">
 
-> 改变一个变量，运行另一个世界。Change one variable, run another world.
+# 🧪 Thought Experiment Lab · 脑洞实验室
 
-A world simulation interface that transforms "What if" hypotheses into structured thought experiments. Built for competition submission.
+**一本正经地胡说八道 · 世界脑洞模拟器**
 
-## Features
+*Change one variable, run another world.*
 
-- **Hypothesis Input** — Enter any "What if" scenario (5-300 chars)
-- **Experiment Configuration** — AI-parsed config with adjustable parameters
-- **Terminal Simulation** — Immersive world model initialization with animated logs
-- **Chain Reaction Timeline** — 4-6 chronological events with impact levels
-- **Alternate Worldlines** — 3 distinct worldline cards (A/B/C)
-- **Dependency Map** — Core → Direct → Secondary → Long-term
-- **Winners & Losers** — Plus breaking points and new creations
-- **Unexpected Outcomes** — Second/third-order effects
-- **Constraint Conflicts** — Logic inconsistency detection
-- **Dark Sci-Fi Theme** — Grid, noise, scanlines, monospace fonts
+[🌐 Live Demo](https://brain.yanyanyan.com.cn) · [📖 About](#about) · [🚀 Quick Start](#quick-start)
 
-## Tech Stack
+</div>
 
-- Next.js 14, React 18, TypeScript, Tailwind CSS
-- Lucide React icons, Zod validation
-- InfiniSynapse API integration
+---
 
-## Quick Start
+![Screenshot](docs/images/screenshot.png)
+
+---
+
+## About
+
+**English:**
+Thought Experiment Lab is a world simulation interface for structured thought experiments. You propose a hypothesis in the form of *"What if [one variable changed]?"*, and the AI-powered engine will:
+
+- 🔬 **Parse** your hypothesis into a structured experiment config (subject, change, duration, scope, adaptation speed, etc.)
+- 🌍 **Simulate** a parallel world where your variable is different — generating causal chains, timelines, and unexpected side effects
+- 📊 **Analyze** the results — dependency graphs, winners & losers, breaking points, constraint conflicts, and final insights
+- 🎭 **Present** three possible worldlines (optimistic / pessimistic / absurd) with dark sci-fi flavored narratives
+
+**中文：**
+脑洞实验室是一个结构化的思维实验世界模拟界面。你提出一个「如果……会怎样」的假设，AI 引擎会：
+
+- 🔬 **解析** 你的假设为结构化实验配置（对象、变化、时长、范围、适应速度等）
+- 🌍 **模拟** 一个变量不同的平行世界 — 生成因果链、时间线、意想不到的连锁反应
+- 📊 **分析** 结果 — 依赖关系图、赢家与输家、崩溃临界点、约束冲突、终极洞察
+- 🎭 **呈现** 三种可能的世界线（乐观 / 悲观 / 荒诞），配以暗黑科幻风格的叙事
+
+---
+
+## ✨ Features / 功能特性
+
+| Feature | Description |
+|---------|-------------|
+| 🧠 AI-Powered Simulation | InfiniSynapse LLM generates rich, coherent world simulations |
+| 📋 Structured Experiments | Configurable subjects, variables, scopes, durations |
+| 🕸️ Dependency Graphs | Visualize how changes cascade through interconnected systems |
+| 📅 Timeline Generation | See the chronological progression of your alternate world |
+| 🌐 Three Worldlines | Optimistic, pessimistic, and absurd parallel outcomes |
+| 🏆 Winners & Losers | Who benefits and who suffers from your change |
+| ⚠️ Constraint Conflicts | Discover logical paradoxes in your thought experiment |
+| 📚 Experiment History | All experiments are saved for future reference |
+| 🎨 Cyberpunk UI | Terminal-style interface with scanlines, grid patterns, and glitch effects |
+
+---
+
+## 🚀 Quick Start / 快速开始
+
+### Prerequisites / 环境要求
+
+- Node.js 18+
+- npm / pnpm / yarn
+
+### Installation / 安装
 
 ```bash
+git clone https://github.com/yan-6/thought-experiment-lab.git
+cd thought-experiment-lab
 npm install
-# Edit .env.local with your INFINISYNAPSE_API_KEY
-npm run dev
 ```
 
-Open http://localhost:3000
+### Configuration / 配置
 
-## Environment Variables
+Copy `.env.example` to `.env.local` and fill in your API keys:
 
+```bash
+cp .env.example .env.local
 ```
-INFINISYNAPSE_API_KEY=your_key
+
+Edit `.env.local`:
+
+```env
+INFINISYNAPSE_API_KEY=your_api_key_here
 INFINISYNAPSE_API_URL=https://api.infiniSynapse.com/v1
 INFINISYNAPSE_MODEL=infiniSynapse-large
 ```
 
-## API Endpoints
+### Development / 开发
 
-- `POST /api/parse-experiment` — Parse hypothesis into config
-- `POST /api/run-experiment` — Run full thought experiment
+```bash
+npm run dev
+```
 
-## State Machine
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-`HOME → PARSING → CONFIG → RUNNING → RESULT` with ERROR reachable from any state.
+### Build / 构建
 
-## Demo Experiments
+```bash
+npm run build
+npm run start
+```
 
-| # | Hypothesis |
-|---|-----------|
-| A | 如果微信消失一年，中国人的数字生活会发生什么？ |
-| B | 如果人类不再需要睡眠，会发生什么？ |
-| C | 如果一家公司取消所有会议，会发生什么？ |
+---
 
-## Disclaimer
+## 🛠️ Tech Stack / 技术栈
 
-All results are AI-assisted structured thought experiments, not real predictions.
+| Layer | Technology |
+|-------|-----------|
+| Framework | [Next.js 14](https://nextjs.org/) (App Router) |
+| Language | [TypeScript](https://www.typescriptlang.org/) |
+| UI | [React 18](https://react.dev/) + [Tailwind CSS](https://tailwindcss.com/) |
+| Animation | [Framer Motion](https://www.framer.com/motion/) |
+| Icons | [Lucide React](https://lucide.dev/) |
+| AI Engine | InfiniSynapse API |
+| Validation | [Zod](https://zod.dev/) |
+| Deployment | [Vercel](https://vercel.com) |
+
+---
+
+## 📂 Project Structure / 项目结构
+
+```
+src/
+├── app/
+│   ├── api/                    # API Routes
+│   │   ├── parse-experiment/   # Hypothesis parsing endpoint
+│   │   ├── run-experiment/     # Experiment simulation endpoint
+│   │   ├── experiments/        # History search endpoint
+│   │   └── data/               # Data context endpoints
+│   ├── page.tsx                # Main page (client component)
+│   ├── layout.tsx              # Root layout
+│   └── globals.css             # Global styles
+├── components/                 # React components
+│   ├── ExperimentInput.tsx     # Hypothesis input
+│   ├── ExperimentConfigPanel.tsx
+│   ├── TerminalLoader.tsx      # Running animation
+│   ├── DependencyMap.tsx       # Causal graph visualization
+│   ├── Timeline.tsx            # Event timeline
+│   ├── WorldlineCard.tsx       # Parallel worldline cards
+│   ├── WinnersLosers.tsx       # Impact analysis
+│   └── ...
+├── lib/
+│   ├── infinisynapse.ts        # AI API client
+│   ├── parser.ts               # Response parser
+│   ├── prompts.ts              # Prompt templates
+│   ├── fallback.ts             # Offline fallback logic
+│   ├── storage.ts              # Experiment history storage
+│   ├── webResearch.ts          # Research context builder
+│   └── dataBridge.ts           # External data connector
+└── types/
+    └── experiment.ts           # TypeScript type definitions
+```
+
+---
+
+## 🌍 Deployment / 部署
+
+This project is deployed on Vercel:
+
+- **Live Site**: [https://brain.yanyanyan.com.cn](https://brain.yanyanyan.com.cn)
+- **Vercel URL**: [https://thought-experiment-lab.vercel.app](https://thought-experiment-lab.vercel.app)
+
+To deploy your own:
+
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+---
+
+## 📄 License / 许可证
+
+This project is for educational and entertainment purposes only.
+**⚠️ Disclaimer: Purely for fun. Do not use as a basis for life decisions.**
+
+本项目仅供学习与娱乐用途。
+**⚠️ 免责声明：纯属娱乐，请勿作为人生决策依据。**
+
+---
+
+<div align="center">
+
+🧪 *What if the world pressed Ctrl+Z?* · *如果世界按下了 Ctrl+Z 会怎样？*
+
+Made with ☕ and 🧠 by [yan-6](https://github.com/yan-6)
+
+</div>
