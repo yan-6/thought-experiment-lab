@@ -3,10 +3,22 @@ import { loadRecentExperiments, searchSimilarExperiments } from "@/lib/storage";
 
 export const dynamic = "force-dynamic";
 
+const DEFAULT_LIMIT = 10;
+const MAX_LIMIT = 100;
+
+function parseLimit(value: string | null): number {
+  if (value === null) return DEFAULT_LIMIT;
+
+  const parsed = Number(value);
+  if (!Number.isSafeInteger(parsed) || parsed < 1) return DEFAULT_LIMIT;
+
+  return Math.min(parsed, MAX_LIMIT);
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
-  const limit = parseInt(searchParams.get("limit") || "10", 10);
+  const limit = parseLimit(searchParams.get("limit"));
 
   try {
     let records;
@@ -25,3 +37,4 @@ export async function GET(request: NextRequest) {
     );
   }
 }
+
